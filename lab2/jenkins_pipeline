@@ -1,10 +1,49 @@
 pipeline {
     agent any
+    
     stages {
-     stage('Hello') {
-                steps {
-                    echo 'Hello world'
+        stage('Data Creation') {
+            steps {
+                sh 'python lab2/data_creation.py'
+            }
+        }
+        
+        stage('Data Preprocessing') {
+            steps {
+                sh 'python lab2/data_preprocessing.py'
+            }
+        }
+        
+        stage('Model Preparation') {
+            steps {
+                sh 'python lab2/model_preparation.py'
+            }
+        }
+        
+        stage('Model Testing') {
+            steps {
+                sh 'python lab2/model_testing.py'
+            }
+        }
+        
+        stage('Archive Artifacts') {
+            steps {
+                archiveArtifacts artifacts: 'lab2/artifacts/*', allowEmptyArchive: true
+            }
+        }
+        
+        stage('Commit and Push Changes') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'github-credentials', passwordVariable: 'GITHUB_PASSWORD', usernameVariable: 'GITHUB_USERNAME')]) {
+                    script {
+                        sh 'git config --global user.email "gigabyte727@gmail.com"'
+                        sh 'git config --global user.name "gigabyte727"'
+                        sh 'git add lab2/artifacts/*'
+                        sh 'git commit -m "Add archived artifacts"'
+                        sh 'git push https://${GITHUB_USERNAME}:${GITHUB_PASSWORD}@github.com/Zagalskiy/mlops_practice.git'
+                    }
                 }
             }
-     }
+        }
+    }
 }
