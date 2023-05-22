@@ -10,7 +10,7 @@ pipeline {
                           extensions: [[$class: 'CleanBeforeCheckout']],
                           submoduleCfg: [],
                           userRemoteConfigs: [[
-                              credentialsId: 'giga', // Имя учетных данных SSH-ключа
+                              credentialsId: 'Jenkins', // Имя учетных данных SSH-ключа
                               url: 'git@github.com:Zagalskiy/mlops_practice.git' // URL вашего репозитория GitHub
                           ]]
                 ])
