@@ -23,10 +23,11 @@ pipeline {
         stage('Build') {
             steps {
                 // Шаг для сборки проекта
-                sh 'python lab2/data_creation.py'
-                sh 'python lab2/data_preprocessing.py'
-                sh 'python lab2/model_preparation.py'
-                sh 'python lab2/model_testing.py'
+                sh 'python3 -m pip install -r lab2/requirements.txt'
+                sh 'python3 lab2/data_creation.py'
+                sh 'python3 lab2/data_preprocessing.py'
+                sh 'python3 lab2/model_preparation.py'
+                sh 'python3 lab2/model_testing.py'
             }
         }
         
