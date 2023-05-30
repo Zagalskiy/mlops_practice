@@ -1,0 +1,27 @@
+stages:
+  - name: requirements
+    cmd: python -m pip install -r requirements.txt
+    deps:
+      - requirements.txt
+  - name: data_creation
+    cmd: python data_creation.py
+    outs:
+      - datasets/data.csv
+  - name: data_modification1
+    cmd: python data_modification1.py
+    deps:
+      - datasets/data.csv
+    outs:
+      - datasets/data_mod1.csv
+  - name: data_modification2
+    cmd: python data_modification2.py
+    deps:
+      - datasets/data_mod1.csv
+    outs:
+      - datasets/data_mod2.csv
+  - name: data_modification3
+    cmd: python data_modification3.py
+    deps:
+      - datasets/data_mod2.csv
+    outs:
+      - datasets/data_mod3.csv
